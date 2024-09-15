@@ -3,16 +3,18 @@ package dev.mayra.seeddesafiocdc.utils.validators;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Object> {
 
-    @Autowired
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     private String fieldName;
     private Class<?> domainClass;
+
+    public UniqueValueValidator(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public void initialize(UniqueValue constraintAnnotation) {
