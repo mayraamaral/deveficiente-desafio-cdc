@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.model.author;
 
+import dev.mayra.seeddesafiocdc.utils.validators.UniqueValue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,7 @@ public class AuthorRequestDTO {
 
     @NotNull(message = "E-mail can't be null")
     @Email(message = "E-mail must be valid")
+    @UniqueValue(fieldName = "email", domainClass = Author.class, message = "E-mail already in use")
     private String email;
 
     @NotNull(message = "Description can't be null")
