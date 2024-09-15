@@ -25,10 +25,6 @@ public class AuthorController {
 
     @PostMapping
     public ResponseEntity<AuthorResponseDTO> create(@RequestBody @Valid AuthorRequestDTO author) {
-        if(authorRepository.existsByEmail(author.getEmail())) {
-            throw new AlreadyInUseException("E-mail already in use");
-        }
-
         AuthorResponseDTO created = authorRepository.save(new Author(author)).toResponseDTO();
 
         return ResponseEntity.ok().body(created);
