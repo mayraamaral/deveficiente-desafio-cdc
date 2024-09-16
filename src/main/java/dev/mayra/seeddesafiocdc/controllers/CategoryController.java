@@ -7,10 +7,9 @@ import dev.mayra.seeddesafiocdc.repositories.CategoryRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -28,5 +27,12 @@ public class CategoryController {
             .save(new Category(category)).toResponseDTO();
 
         return ResponseEntity.ok().body(created);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryResponseDTO>> findAll() {
+        return ResponseEntity.ok().body(categoryRepository.findAll()
+            .stream().map(Category::toResponseDTO)
+            .toList());
     }
 }

@@ -7,10 +7,9 @@ import dev.mayra.seeddesafiocdc.repositories.AuthorRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/author")
@@ -27,5 +26,12 @@ public class AuthorController {
         AuthorResponseDTO created = authorRepository.save(new Author(author)).toResponseDTO();
 
         return ResponseEntity.ok().body(created);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AuthorResponseDTO>> listAll() {
+        return ResponseEntity.ok().body(authorRepository.findAll()
+            .stream().map(Author::toResponseDTO)
+            .toList());
     }
 }
