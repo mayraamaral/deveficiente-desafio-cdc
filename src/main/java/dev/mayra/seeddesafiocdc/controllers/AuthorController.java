@@ -4,7 +4,6 @@ import dev.mayra.seeddesafiocdc.model.author.Author;
 import dev.mayra.seeddesafiocdc.model.author.AuthorRequestDTO;
 import dev.mayra.seeddesafiocdc.model.author.AuthorResponseDTO;
 import dev.mayra.seeddesafiocdc.repositories.AuthorRepository;
-import dev.mayra.seeddesafiocdc.utils.exceptions.AlreadyInUseException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
