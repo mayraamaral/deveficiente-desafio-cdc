@@ -30,7 +30,7 @@ public class BookRequestDTO {
 
     @NotNull(message = "Pages number can't be null")
     @Schema(description = "Fill the book number of pages", required = true, example = "288")
-    private Integer pagesNumber;
+    private Short pagesNumber;
 
     @NotNull(message = "ISBN can't be null")
     @UniqueValue(fieldName = "isbn", domainClass = Book.class, message = "ISBN already in use")
@@ -49,7 +49,7 @@ public class BookRequestDTO {
     @Schema(description = "Fill the book authors id list", required = true, example = "[1, 2]")
     private List<Long> authorsIds;
 
-    public BookRequestDTO(String title, String bookAbstract, String summary, Double price, Integer pagesNumber, String isbn, LocalDate publishDate, Long categoryId, List<Long> authorsIds) {
+    public BookRequestDTO(String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, LocalDate publishDate, Long categoryId, List<Long> authorsIds) {
         this.title = title;
         this.bookAbstract = bookAbstract;
         this.summary = summary;
@@ -77,7 +77,7 @@ public class BookRequestDTO {
         return price;
     }
 
-    public Integer getPagesNumber() {
+    public Short getPagesNumber() {
         return pagesNumber;
     }
 

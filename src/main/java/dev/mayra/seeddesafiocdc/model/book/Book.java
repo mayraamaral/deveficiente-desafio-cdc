@@ -29,7 +29,7 @@ public class Book {
     private Double price;
 
     @Column(name = "pages_number")
-    private Integer pagesNumber;
+    private Short pagesNumber;
 
     @Column
     private String isbn;
@@ -50,7 +50,7 @@ public class Book {
     @Deprecated
     public Book() {}
 
-    public Book(String title, String bookAbstract, String summary, Double price, Integer pagesNumber, String isbn, LocalDate publishDate, Category category, List<Author> authors) {
+    public Book(String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, LocalDate publishDate, Category category, List<Author> authors) {
         this.title = title;
         this.bookAbstract = bookAbstract;
         this.summary = summary;
@@ -94,7 +94,7 @@ public class Book {
         return price;
     }
 
-    public Integer getPagesNumber() {
+    public Short getPagesNumber() {
         return pagesNumber;
     }
 

@@ -12,13 +12,13 @@ public class BookResponseDTO {
     private String bookAbstract;
     private String summary;
     private Double price;
-    private Integer pagesNumber;
+    private Short pagesNumber;
     private String isbn;
     private LocalDate publishDate;
     private Category category;
     private List<AuthorMinifiedDTO> authors;
 
-    public BookResponseDTO(Long id, String title, String bookAbstract, String summary, Double price, Integer pagesNumber, String isbn, LocalDate publishDate, Category category, List<AuthorMinifiedDTO> authors) {
+    public BookResponseDTO(Long id, String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, LocalDate publishDate, Category category, List<AuthorMinifiedDTO> authors) {
         this.id = id;
         this.title = title;
         this.bookAbstract = bookAbstract;
@@ -51,7 +51,7 @@ public class BookResponseDTO {
         return price;
     }
 
-    public Integer getPagesNumber() {
+    public Short getPagesNumber() {
         return pagesNumber;
     }
 
