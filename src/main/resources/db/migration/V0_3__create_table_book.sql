@@ -4,7 +4,7 @@ CREATE TABLE book (
     abstract VARCHAR(500) NOT NULL,
     summary TEXT,
     price DECIMAL(10, 2) NOT NULL,
-    pages_number INT NOT NULL,
+    pages_number MEDIUMINT UNSIGNED NOT NULL,
     isbn TEXT NOT NULL,
     publish_date DATE,
     category_id BIGINT NOT NULL,
