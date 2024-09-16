@@ -1,8 +1,11 @@
 package dev.mayra.seeddesafiocdc.model.author;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.mayra.seeddesafiocdc.model.book.Book;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Author {
@@ -23,6 +26,10 @@ public class Author {
 
     @Column
     private LocalDate createdAt;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books;
 
     @Deprecated
     public Author() {}
@@ -47,6 +54,10 @@ public class Author {
 
     public String getName() {
         return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getDescription() {
