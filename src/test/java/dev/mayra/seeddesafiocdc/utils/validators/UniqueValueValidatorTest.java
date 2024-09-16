@@ -16,7 +16,7 @@ public class UniqueValueValidatorTest {
     private UniqueValueValidator validator;
     private EntityManager entityManager;
     private ConstraintValidatorContext context;
-    TypedQuery<Long> query;
+    TypedQuery<Boolean> query;
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -28,36 +28,36 @@ public class UniqueValueValidatorTest {
     }
 
     @Test
-    public void shouldReturnTrueWhenValueIsUnique() {
+    public void isValid__should_return_true_when_value_is_unique() {
         when(query.setParameter(anyString(), any())).thenReturn(query);
-        when(query.getSingleResult()).thenReturn(0L);
+        when(query.getSingleResult()).thenReturn(false);
 
-        when(entityManager.createQuery(anyString(), eq(Long.class))).thenReturn(query);
+        when(entityManager.createQuery(anyString(), eq(Boolean.class))).thenReturn(query);
 
         UniqueValue uniqueValueAnnotation = mock(UniqueValue.class);
-        when(uniqueValueAnnotation.fieldName()).thenReturn("email");
-        doReturn(Author.class).when(uniqueValueAnnotation).domainClass();
+        when(uniqueValueAnnotation.fieldName()).thenReturn("field");
+        doReturn(Object.class).when(uniqueValueAnnotation).domainClass();
 
         validator.initialize(uniqueValueAnnotation);
 
-        boolean isValid = validator.isValid("unique@example.com", context);
+        boolean isValid = validator.isValid("unique", context);
         assertThat(isValid).isTrue();
     }
 
     @Test
-    public void shouldReturnFalseWhenValueAlreadyExists() {
+    public void isValid__should_return_false_when_value_already_exists() {
         when(query.setParameter(anyString(), any())).thenReturn(query);
-        when(query.getSingleResult()).thenReturn(1L);
+        when(query.getSingleResult()).thenReturn(true);
 
-        when(entityManager.createQuery(anyString(), eq(Long.class))).thenReturn(query);
+        when(entityManager.createQuery(anyString(), eq(Boolean.class))).thenReturn(query);
 
         UniqueValue uniqueValueAnnotation = mock(UniqueValue.class);
-        when(uniqueValueAnnotation.fieldName()).thenReturn("email");
-        doReturn(Author.class).when(uniqueValueAnnotation).domainClass();
+        when(uniqueValueAnnotation.fieldName()).thenReturn("field");
+        doReturn(Object.class).when(uniqueValueAnnotation).domainClass();
 
         validator.initialize(uniqueValueAnnotation);
 
-        boolean isValid = validator.isValid("not_unique@example.com", context);
+        boolean isValid = validator.isValid("not_unique", context);
         assertThat(isValid).isFalse();
     }
 }

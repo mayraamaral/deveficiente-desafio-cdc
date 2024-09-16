@@ -3,7 +3,6 @@ package dev.mayra.seeddesafiocdc.utils.validators;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.util.Assert;
 
 public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Object> {
 
@@ -28,13 +27,16 @@ public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Ob
             return true;
         }
 
-        String jpql = "SELECT COUNT(e) FROM " + domainClass.getName() + " e WHERE e." + fieldName + " = :value";
-        Long count = entityManager.createQuery(jpql, Long.class)
+        String jpql = "SELECT COUNT(e) > 0 FROM "
+            .concat(domainClass.getName())
+            .concat(" e WHERE e.")
+            .concat(fieldName)
+            .concat(" = :value");
+
+        boolean alreadyExists = entityManager.createQuery(jpql, Boolean.class)
             .setParameter("value", value)
             .getSingleResult();
 
-        Assert.state(count <= 1, "More than one entity found with the same value for " + fieldName);
-
-        return count == 0;
+        return !alreadyExists;
     }
 }
