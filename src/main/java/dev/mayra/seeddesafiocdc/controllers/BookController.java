@@ -2,6 +2,7 @@ package dev.mayra.seeddesafiocdc.controllers;
 
 import dev.mayra.seeddesafiocdc.model.author.Author;
 import dev.mayra.seeddesafiocdc.model.book.Book;
+import dev.mayra.seeddesafiocdc.model.book.BookMinifiedDTO;
 import dev.mayra.seeddesafiocdc.model.book.BookRequestDTO;
 import dev.mayra.seeddesafiocdc.model.book.BookResponseDTO;
 import dev.mayra.seeddesafiocdc.model.category.Category;
@@ -52,6 +53,13 @@ public class BookController {
     public ResponseEntity<List<BookResponseDTO>> listAll() {
         return ResponseEntity.ok().body(bookRepository.findAll()
             .stream().map(Book::toResponseDTO)
+            .toList());
+    }
+
+    @GetMapping("/minified")
+    public ResponseEntity<List<BookMinifiedDTO>> listAllMinified() {
+        return ResponseEntity.ok().body(bookRepository.findAll()
+            .stream().map(Book::toMinifiedDTO)
             .toList());
     }
 }
