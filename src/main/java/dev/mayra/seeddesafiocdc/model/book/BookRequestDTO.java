@@ -2,18 +2,19 @@ package dev.mayra.seeddesafiocdc.model.book;
 
 import dev.mayra.seeddesafiocdc.utils.validators.UniqueValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class BookRequestDTO {
-    @NotNull(message = "Title can't be null")
+    @NotBlank(message = "Title can't be null or empty")
     @UniqueValue(fieldName = "title", domainClass = Book.class, message = "Title already in use")
     @Schema(description = "Fill the book title", required = true, example = "Olhai os lírios do campo")
     private String title;
 
-    @NotNull(message = "Abstract can't be null")
+    @NotBlank(message = "Abstract can't be null or empty")
     @Schema(description = "Fill the book abstract", required = true, example = "Fala sobre a jornada de um " +
         "jovem pobre que ascende socialmente")
     private String bookAbstract;
@@ -32,7 +33,7 @@ public class BookRequestDTO {
     @Schema(description = "Fill the book number of pages", required = true, example = "288")
     private Short pagesNumber;
 
-    @NotNull(message = "ISBN can't be null")
+    @NotBlank(message = "ISBN can't be null or empty")
     @UniqueValue(fieldName = "isbn", domainClass = Book.class, message = "ISBN already in use")
     @Schema(description = "Fill the book ISBN", required = true, example = "978-8535906097")
     private String isbn;

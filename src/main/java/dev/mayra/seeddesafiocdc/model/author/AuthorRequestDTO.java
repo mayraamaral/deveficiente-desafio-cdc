@@ -3,22 +3,22 @@ package dev.mayra.seeddesafiocdc.model.author;
 import dev.mayra.seeddesafiocdc.utils.validators.UniqueValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class AuthorRequestDTO {
 
-    @NotNull(message = "Name can't be null")
+    @NotBlank(message = "Name can't be null or empty")
     @Schema(description = "Fill the author name", required = true, example = "Érico Veríssimo")
     private String name;
 
-    @NotNull(message = "E-mail can't be null")
+    @NotBlank(message = "E-mail can't be null or empty")
     @Email(message = "E-mail must be valid")
     @UniqueValue(fieldName = "email", domainClass = Author.class, message = "E-mail already in use")
     @Schema(description = "Fill the author e-mail", required = true, example = "example@email.com")
     private String email;
 
-    @NotNull(message = "Description can't be null")
+    @NotBlank(message = "Description can't be null or empty")
     @Size(max = 400, message = "Description can have a maximum of 400 characters")
     @Schema(description = "Fill the author description", required = true, example = "Erico Lopes Verissimo foi um " +
         "escritor brasileiro. Com uma prosa simples e de fácil leitura, tornou-se um dos escritores mais " +
