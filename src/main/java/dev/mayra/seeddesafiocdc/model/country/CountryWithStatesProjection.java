@@ -5,8 +5,6 @@ import dev.mayra.seeddesafiocdc.model.state.StateWithoutCountryResponseDTO;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Arrays.stream;
-
 public interface CountryWithStatesProjection {
     Long getId();
     String getName();
