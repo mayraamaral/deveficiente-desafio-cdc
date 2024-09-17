@@ -119,4 +119,8 @@ public class Book {
             isbn, publishDate, category,
             authors.stream().map(AuthorMinifiedDTO::new).toList());
     }
+
+    public BookMinifiedDTO toMinifiedDTO() {
+        return new BookMinifiedDTO(id, title);
+    }
 }
