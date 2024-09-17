@@ -116,7 +116,7 @@ public class Book {
 
     public BookResponseDTO toResponseDTO() {
         return new BookResponseDTO(id, title, bookAbstract, summary, price, pagesNumber,
-            isbn, publishDate, category,
+            isbn, publishDate, category.toResponseDTO(),
             authors.stream().map(AuthorMinifiedDTO::new).toList());
     }
 
