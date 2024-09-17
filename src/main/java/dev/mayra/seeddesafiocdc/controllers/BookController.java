@@ -62,4 +62,12 @@ public class BookController {
             .stream().map(Book::toMinifiedDTO)
             .toList());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookResponseDTO> listById(@PathVariable Long id) {
+        Book found = bookRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Book not found"));
+
+        return ResponseEntity.ok().body(found.toResponseDTO());
+    }
 }
