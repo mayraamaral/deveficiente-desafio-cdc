@@ -32,6 +32,10 @@ public class Country {
         this.name = dto.getName();
     }
 
+    public boolean hasStates() {
+        return !states.isEmpty();
+    }
+
     public Long getId() {
         return id;
     }
