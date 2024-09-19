@@ -4,6 +4,7 @@ import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
 import dev.mayra.seeddesafiocdc.utils.validators.NotEmptyList;
 import dev.mayra.seeddesafiocdc.utils.validators.ValidStateIfCountryHasStates;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -52,6 +53,10 @@ public class PurchaseRequestDTO {
     @NotEmptyList(message = "A purchase needs to have at least one item")
     private List<PurchaseItemRequestDTO> items;
 
+    @NotNull(message = "Total can't be null")
+    @Min(value = 1, message = "Total needs to greater than one")
+    private Double total;
+
     public String getName() {
         return name;
     }
@@ -94,6 +99,10 @@ public class PurchaseRequestDTO {
 
     public String getContact() {
         return contact;
+    }
+
+    public Double getTotal() {
+        return total;
     }
 
     public List<PurchaseItemRequestDTO> getItems() {

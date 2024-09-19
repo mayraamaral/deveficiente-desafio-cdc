@@ -22,9 +22,12 @@ public class PurchaseResponseDTO {
 
     private List<PurchaseItemResponseDTO> items;
 
+    private Double total;
+
     public PurchaseResponseDTO(Long id, String name, String lastname, String document, String documentType,
                                String address, String addressSecondLine, String zipCode, String city, StateResponseDTO state,
-                               CountryResponseDTO country, String contact, List<PurchaseItemResponseDTO> items) {
+                               CountryResponseDTO country, String contact, List<PurchaseItemResponseDTO> items,
+                               Double total) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -38,6 +41,7 @@ public class PurchaseResponseDTO {
         this.country = country;
         this.contact = contact;
         this.items = items;
+        this.total = total;
     }
 
     public Long getId() {
@@ -90,5 +94,9 @@ public class PurchaseResponseDTO {
 
     public List<PurchaseItemResponseDTO> getItems() {
         return items;
+    }
+
+    public Double getTotal() {
+        return total;
     }
 }
