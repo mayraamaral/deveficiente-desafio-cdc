@@ -1,4 +1,4 @@
-package dev.mayra.seeddesafiocdc.model.payment;
+package dev.mayra.seeddesafiocdc.model.purchase;
 
 import dev.mayra.seeddesafiocdc.utils.validators.ValidStateIfCountryHasStates;
 
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @ValidStateIfCountryHasStates
-public class PaymentRequestDTO {
+public class PurchaseRequestDTO {
     @NotBlank(message = "Name can't be null or empty")
     private String name;
 

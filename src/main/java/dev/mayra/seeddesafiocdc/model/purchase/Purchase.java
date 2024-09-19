@@ -1,4 +1,4 @@
-package dev.mayra.seeddesafiocdc.model.payment;
+package dev.mayra.seeddesafiocdc.model.purchase;
 
 import dev.mayra.seeddesafiocdc.model.country.Country;
 import dev.mayra.seeddesafiocdc.model.state.State;
@@ -6,7 +6,7 @@ import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 
 import java.util.Optional;
 
-public class Payment {
+public class Purchase {
     private Long id;
     private String name;
     private String lastname;
@@ -20,8 +20,8 @@ public class Payment {
     private Country country;
     private String contact;
 
-    public Payment(Long id, String name, String lastname, String document, DocumentType documentType, String address,
-                   String addressSecondLine, String zipCode, String city, State state, Country country, String contact) {
+    public Purchase(Long id, String name, String lastname, String document, DocumentType documentType, String address,
+                    String addressSecondLine, String zipCode, String city, State state, Country country, String contact) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -36,7 +36,7 @@ public class Payment {
         this.contact = contact;
     }
 
-    public Payment(PaymentRequestDTO dto, Country country, State state) {
+    public Purchase(PurchaseRequestDTO dto, Country country, State state) {
         this.name = dto.getName();
         this.lastname = dto.getLastname();
         this.document = dto.getDocument();
@@ -98,11 +98,11 @@ public class Payment {
         return contact;
     }
 
-    public PaymentResponseDTO toResponseDTO() {
+    public PurchaseResponseDTO toResponseDTO() {
         StateResponseDTO stateResponse = Optional.ofNullable(state)
             .map(State::toResponseDTO).orElse(null);
 
-        return new PaymentResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
+        return new PurchaseResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
             addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact);
 
     }

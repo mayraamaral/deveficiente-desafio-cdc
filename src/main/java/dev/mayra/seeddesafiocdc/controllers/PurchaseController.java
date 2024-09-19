@@ -1,9 +1,9 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
 import dev.mayra.seeddesafiocdc.model.country.Country;
-import dev.mayra.seeddesafiocdc.model.payment.Payment;
-import dev.mayra.seeddesafiocdc.model.payment.PaymentRequestDTO;
-import dev.mayra.seeddesafiocdc.model.payment.PaymentResponseDTO;
+import dev.mayra.seeddesafiocdc.model.purchase.Purchase;
+import dev.mayra.seeddesafiocdc.model.purchase.PurchaseRequestDTO;
+import dev.mayra.seeddesafiocdc.model.purchase.PurchaseResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.repositories.CountryRepository;
 import dev.mayra.seeddesafiocdc.repositories.StateRepository;
@@ -17,39 +17,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/payment")
-@Tag(name = "Payment", description = "Operations related to the Payment entity")
-public class PaymentController {
+@RequestMapping("/purchase")
+@Tag(name = "Purchase", description = "Operations related to the Purchase entity")
+public class PurchaseController {
     private final CountryRepository countryRepository;
     private final StateRepository stateRepository;
 
-    List<Payment> payments = new ArrayList<>();
+    List<Purchase> purchases = new ArrayList<>();
 
-    public PaymentController(CountryRepository countryRepository, StateRepository stateRepository) {
+    public PurchaseController(CountryRepository countryRepository, StateRepository stateRepository) {
         this.countryRepository = countryRepository;
         this.stateRepository = stateRepository;
     }
 
     @PostMapping
-    public ResponseEntity<PaymentResponseDTO> create(@RequestBody @Valid PaymentRequestDTO payment) {
-        Country country = countryRepository.findById(payment.getCountryId())
+    public ResponseEntity<PurchaseResponseDTO> create(@RequestBody @Valid PurchaseRequestDTO purchase) {
+        Country country = countryRepository.findById(purchase.getCountryId())
             .orElseThrow(() -> new NotFoundException("Country not found"));
 
         State state = null;
 
         if(country.hasStates()) {
-            state = stateRepository.findById(payment.getStateId())
+            state = stateRepository.findById(purchase.getStateId())
                 .orElseThrow(() -> new NotFoundException("State not found"));
         }
 
-        Payment created = new Payment(payment, country, state);
-        payments.add(created);
+        Purchase created = new Purchase(purchase, country, state);
+        purchases.add(created);
 
         return ResponseEntity.ok().body(created.toResponseDTO());
     }
 
     @GetMapping
-    public ResponseEntity<List<PaymentResponseDTO>> listAll() {
-        return ResponseEntity.ok().body(payments.stream().map(Payment::toResponseDTO).toList());
+    public ResponseEntity<List<PurchaseResponseDTO>> listAll() {
+        return ResponseEntity.ok().body(purchases.stream().map(Purchase::toResponseDTO).toList());
     }
 }

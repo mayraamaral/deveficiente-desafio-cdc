@@ -1,4 +1,4 @@
-package dev.mayra.seeddesafiocdc.model.payment;
+package dev.mayra.seeddesafiocdc.model.purchase;
 
 public enum DocumentType {
     CPF("CPF"),
