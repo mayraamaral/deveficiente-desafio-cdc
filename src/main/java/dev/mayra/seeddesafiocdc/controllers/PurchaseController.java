@@ -10,6 +10,7 @@ import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.repositories.BookRepository;
 import dev.mayra.seeddesafiocdc.repositories.CountryRepository;
+import dev.mayra.seeddesafiocdc.repositories.PurchaseRepository;
 import dev.mayra.seeddesafiocdc.repositories.StateRepository;
 import dev.mayra.seeddesafiocdc.utils.exceptions.InvalidRequestException;
 import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
@@ -18,7 +19,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/purchase")
 @Tag(name = "Purchase", description = "Operations related to the Purchase entity")
 public class PurchaseController {
+    private final PurchaseRepository purchaseRepository;
     private final CountryRepository countryRepository;
     private final StateRepository stateRepository;
     private final BookRepository bookRepository;
 
-    List<Purchase> purchases = new ArrayList<>();
-
-    public PurchaseController(CountryRepository countryRepository, StateRepository stateRepository, BookRepository bookRepository) {
+    public PurchaseController(PurchaseRepository purchaseRepository, CountryRepository countryRepository, StateRepository stateRepository, BookRepository bookRepository) {
+        this.purchaseRepository = purchaseRepository;
         this.countryRepository = countryRepository;
         this.stateRepository = stateRepository;
         this.bookRepository = bookRepository;
@@ -59,9 +59,14 @@ public class PurchaseController {
             throw new InvalidRequestException("Total given is different than calculated total");
         }
 
-        purchases.add(created);
+        return ResponseEntity.ok().body(purchaseRepository.save(created).toResponseDTO());
+    }
 
-        return ResponseEntity.ok().body(created.toResponseDTO());
+    @GetMapping
+    public ResponseEntity<List<PurchaseResponseDTO>> listAll() {
+        return ResponseEntity.ok().body(purchaseRepository.findAllWithItems()
+            .stream().map(Purchase::toResponseDTO)
+            .toList());
     }
 
     private List<PurchaseItem> itemRequestListToItem(PurchaseRequestDTO dto) {
@@ -90,10 +95,5 @@ public class PurchaseController {
                 .toList();
             throw new NotFoundException("Books not found with ids: " + missingIds);
         }
-    }
-
-    @GetMapping
-    public ResponseEntity<List<PurchaseResponseDTO>> listAll() {
-        return ResponseEntity.ok().body(purchases.stream().map(Purchase::toResponseDTO).toList());
     }
 }
