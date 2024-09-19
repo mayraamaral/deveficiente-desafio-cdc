@@ -2,6 +2,7 @@ package dev.mayra.seeddesafiocdc.model.payment;
 
 import dev.mayra.seeddesafiocdc.model.country.Country;
 import dev.mayra.seeddesafiocdc.model.state.State;
+import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 
 import java.util.Optional;
 
@@ -98,12 +99,11 @@ public class Payment {
     }
 
     public PaymentResponseDTO toResponseDTO() {
-        if(Optional.ofNullable(state).isEmpty()) {
-            return new PaymentResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
-                addressSecondLine, zipCode, city, null, country.toResponseDTO(), contact);
-        }
+        StateResponseDTO stateResponse = Optional.ofNullable(state)
+            .map(State::toResponseDTO).orElse(null);
 
         return new PaymentResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
-            addressSecondLine, zipCode, city, state.toResponseDTO(), country.toResponseDTO(), contact);
+            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact);
+
     }
 }
