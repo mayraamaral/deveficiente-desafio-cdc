@@ -1,7 +1,10 @@
 package dev.mayra.seeddesafiocdc.model.purchase;
 
 import dev.mayra.seeddesafiocdc.model.country.CountryResponseDTO;
+import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
+
+import java.util.List;
 
 public class PurchaseResponseDTO {
     private Long id;
@@ -17,9 +20,11 @@ public class PurchaseResponseDTO {
     private CountryResponseDTO country;
     private String contact;
 
+    private List<PurchaseItemResponseDTO> items;
+
     public PurchaseResponseDTO(Long id, String name, String lastname, String document, String documentType,
                                String address, String addressSecondLine, String zipCode, String city, StateResponseDTO state,
-                               CountryResponseDTO country, String contact) {
+                               CountryResponseDTO country, String contact, List<PurchaseItemResponseDTO> items) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -32,6 +37,7 @@ public class PurchaseResponseDTO {
         this.state = state;
         this.country = country;
         this.contact = contact;
+        this.items = items;
     }
 
     public Long getId() {
@@ -80,5 +86,9 @@ public class PurchaseResponseDTO {
 
     public String getContact() {
         return contact;
+    }
+
+    public List<PurchaseItemResponseDTO> getItems() {
+        return items;
     }
 }

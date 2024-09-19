@@ -1,10 +1,14 @@
 package dev.mayra.seeddesafiocdc.model.purchase;
 
+import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
+import dev.mayra.seeddesafiocdc.utils.validators.NotEmptyList;
 import dev.mayra.seeddesafiocdc.utils.validators.ValidStateIfCountryHasStates;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+
+import java.util.List;
 
 @ValidStateIfCountryHasStates
 public class PurchaseRequestDTO {
@@ -43,6 +47,10 @@ public class PurchaseRequestDTO {
 
     @NotBlank(message = "Contact can't be null or empty")
     private String contact;
+
+    @NotNull(message = "A purchase needs to have at least one item")
+    @NotEmptyList(message = "A purchase needs to have at least one item")
+    private List<PurchaseItemRequestDTO> items;
 
     public String getName() {
         return name;
@@ -86,5 +94,9 @@ public class PurchaseRequestDTO {
 
     public String getContact() {
         return contact;
+    }
+
+    public List<PurchaseItemRequestDTO> getItems() {
+        return items;
     }
 }

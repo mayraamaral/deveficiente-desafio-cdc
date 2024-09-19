@@ -1,9 +1,13 @@
 package dev.mayra.seeddesafiocdc.model.purchase;
 
 import dev.mayra.seeddesafiocdc.model.country.Country;
+import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
+import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Purchase {
@@ -19,6 +23,8 @@ public class Purchase {
     private State state;
     private Country country;
     private String contact;
+
+    private List<PurchaseItem> items = new ArrayList<>();
 
     public Purchase(Long id, String name, String lastname, String document, DocumentType documentType, String address,
                     String addressSecondLine, String zipCode, String city, State state, Country country, String contact) {
@@ -103,7 +109,17 @@ public class Purchase {
             .map(State::toResponseDTO).orElse(null);
 
         return new PurchaseResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
-            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact);
+            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact, itemsToResponseDTO());
 
+    }
+
+    public void addAllItems(List<PurchaseItem> items) {
+        this.items.addAll(items);
+    }
+
+    public List<PurchaseItemResponseDTO> itemsToResponseDTO() {
+        return items.stream().map(i ->
+                new PurchaseItemResponseDTO(i.getId(), i.getBook().toMinifiedDTO(), i.getQuantity()))
+            .toList();
     }
 }
