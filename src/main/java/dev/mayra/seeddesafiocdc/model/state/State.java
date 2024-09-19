@@ -1,7 +1,6 @@
 package dev.mayra.seeddesafiocdc.model.state;
 
 import dev.mayra.seeddesafiocdc.model.country.Country;
-import dev.mayra.seeddesafiocdc.model.country.CountryWithStatesProjection;
 import jakarta.persistence.*;
 
 @Entity
@@ -44,7 +43,11 @@ public class State {
         return country;
     }
 
+    public StateWithCountryResponseDTO toWithStateResponseDTO() {
+        return new StateWithCountryResponseDTO(id, name, country.toResponseDTO());
+    }
+
     public StateResponseDTO toResponseDTO() {
-        return new StateResponseDTO(id, name, country.toResponseDTO());
+        return new StateResponseDTO(id, name);
     }
 }

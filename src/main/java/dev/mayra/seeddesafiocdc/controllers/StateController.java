@@ -3,7 +3,7 @@ package dev.mayra.seeddesafiocdc.controllers;
 import dev.mayra.seeddesafiocdc.model.country.Country;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateRequestDTO;
-import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
+import dev.mayra.seeddesafiocdc.model.state.StateWithCountryResponseDTO;
 import dev.mayra.seeddesafiocdc.repositories.CountryRepository;
 import dev.mayra.seeddesafiocdc.repositories.StateRepository;
 import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
@@ -27,28 +27,28 @@ public class StateController {
     }
 
     @PostMapping
-    public ResponseEntity<StateResponseDTO> create(@RequestBody @Valid StateRequestDTO state) {
+    public ResponseEntity<StateWithCountryResponseDTO> create(@RequestBody @Valid StateRequestDTO state) {
         Country found = countryRepository.findById(state.getCountryId())
             .orElseThrow(() -> new NotFoundException("Country not found"));
 
         return ResponseEntity.ok().body(
             stateRepository.save(new State(state, found))
-                .toResponseDTO());
+                .toWithStateResponseDTO());
     }
 
     @GetMapping
-    public ResponseEntity<List<StateResponseDTO>> listAll() {
+    public ResponseEntity<List<StateWithCountryResponseDTO>> listAll() {
         return ResponseEntity.ok().body(
             stateRepository.findAll()
-                .stream().map(State::toResponseDTO)
+                .stream().map(State::toWithStateResponseDTO)
                 .toList());
     }
 
     @GetMapping("/{countryId}")
-    public ResponseEntity<List<StateResponseDTO>> listAllByCountryId(@PathVariable Long countryId) {
+    public ResponseEntity<List<StateWithCountryResponseDTO>> listAllByCountryId(@PathVariable Long countryId) {
         return ResponseEntity.ok().body(
             stateRepository.findAllByCountry_Id(countryId)
-                .stream().map(State::toResponseDTO)
+                .stream().map(State::toWithStateResponseDTO)
                 .toList());
     }
 }

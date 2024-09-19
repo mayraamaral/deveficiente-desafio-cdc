@@ -1,13 +1,13 @@
 package dev.mayra.seeddesafiocdc.model.country;
 
-import dev.mayra.seeddesafiocdc.model.state.StateWithoutCountryResponseDTO;
+import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 
 import java.util.List;
 
 public class CountryWithStatesResponseDTO extends CountryResponseDTO {
-    private List<StateWithoutCountryResponseDTO> states;
+    private List<StateResponseDTO> states;
 
-    public CountryWithStatesResponseDTO(Long id, String name, List<StateWithoutCountryResponseDTO> states) {
+    public CountryWithStatesResponseDTO(Long id, String name, List<StateResponseDTO> states) {
         super(id, name);
         this.states = states;
     }
@@ -18,7 +18,7 @@ public class CountryWithStatesResponseDTO extends CountryResponseDTO {
             projection.getStatesWithoutCountryResponseDTO());
     }
 
-    public List<StateWithoutCountryResponseDTO> getStates() {
+    public List<StateResponseDTO> getStates() {
         return states;
     }
 }
