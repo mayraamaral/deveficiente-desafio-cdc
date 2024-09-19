@@ -6,8 +6,10 @@ import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Purchase {
@@ -26,8 +28,11 @@ public class Purchase {
 
     private List<PurchaseItem> items = new ArrayList<>();
 
+    private Double total;
+
     public Purchase(Long id, String name, String lastname, String document, DocumentType documentType, String address,
-                    String addressSecondLine, String zipCode, String city, State state, Country country, String contact) {
+                    String addressSecondLine, String zipCode, String city, State state, Country country, String contact,
+                    BigDecimal total) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -54,6 +59,7 @@ public class Purchase {
         this.state = state;
         this.country = country;
         this.contact = dto.getContact();
+        this.total = dto.getTotal();
     }
 
     public Long getId() {
@@ -104,16 +110,32 @@ public class Purchase {
         return contact;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public Double calculateTotal() {
+        return items.stream()
+            .mapToDouble(item -> item.getBook().getPrice() * item.getQuantity())
+            .sum();
+    }
+
+    public boolean isEqualToCalculatedTotal(Double total) {
+        return Objects.equals(total, calculateTotal());
+    }
+
     public PurchaseResponseDTO toResponseDTO() {
         StateResponseDTO stateResponse = Optional.ofNullable(state)
             .map(State::toResponseDTO).orElse(null);
 
         return new PurchaseResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
-            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact, itemsToResponseDTO());
+            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact, itemsToResponseDTO(),
+            total);
 
     }
 
     public void addAllItems(List<PurchaseItem> items) {
+        items.forEach(item -> item.setPurchase(this));
         this.items.addAll(items);
     }
 
