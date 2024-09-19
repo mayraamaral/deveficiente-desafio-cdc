@@ -2,6 +2,7 @@ package dev.mayra.seeddesafiocdc.model.book;
 
 import dev.mayra.seeddesafiocdc.utils.validators.UniqueValue;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -26,6 +27,7 @@ public class BookRequestDTO {
     private String summary;
 
     @NotNull(message = "Price can't be null")
+    @Min(value = 20, message = "Book needs to have price greater or equal to 20")
     @Schema(description = "Fill the book price", required = true, example = "50")
     private Double price;
 
