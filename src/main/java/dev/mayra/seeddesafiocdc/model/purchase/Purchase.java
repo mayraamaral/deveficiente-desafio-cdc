@@ -5,6 +5,7 @@ import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,23 +13,58 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Entity
 public class Purchase {
+
+    @Id
+    @Column(name = "purchase_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private String name;
+
+    @Column(name = "last_name")
     private String lastname;
+
+    @Column
     private String document;
+
+    @Column(name = "document_type")
+    @Enumerated(value = EnumType.STRING)
     private DocumentType documentType;
+
+    @Column
     private String address;
+
+    @Column(name = "address_second_line")
     private String addressSecondLine;
+
+    @Column(name = "zip_code")
     private String zipCode;
+
+    @Column
     private String city;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id")
     private State state;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
     private Country country;
+
+    @Column
     private String contact;
 
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseItem> items = new ArrayList<>();
 
+    @Column
     private Double total;
+
+    @Deprecated
+    public Purchase() {}
 
     public Purchase(Long id, String name, String lastname, String document, DocumentType documentType, String address,
                     String addressSecondLine, String zipCode, String city, State state, Country country, String contact,
