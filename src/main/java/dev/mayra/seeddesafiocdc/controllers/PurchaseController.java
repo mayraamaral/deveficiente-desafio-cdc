@@ -11,6 +11,7 @@ import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.repositories.BookRepository;
 import dev.mayra.seeddesafiocdc.repositories.CountryRepository;
 import dev.mayra.seeddesafiocdc.repositories.StateRepository;
+import dev.mayra.seeddesafiocdc.utils.exceptions.InvalidRequestException;
 import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -53,6 +54,11 @@ public class PurchaseController {
         Purchase created = new Purchase(purchase, country, state);
         List<PurchaseItem> itemsEntity = itemRequestListToItem(purchase);
         created.addAllItems(itemsEntity);
+
+        if(!created.isEqualToCalculatedTotal(purchase.getTotal())) {
+            throw new InvalidRequestException("Total given is different than calculated total");
+        }
+
         purchases.add(created);
 
         return ResponseEntity.ok().body(created.toResponseDTO());
