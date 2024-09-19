@@ -2,12 +2,29 @@ package dev.mayra.seeddesafiocdc.model.purchaseItem;
 
 import dev.mayra.seeddesafiocdc.model.book.Book;
 import dev.mayra.seeddesafiocdc.model.purchase.Purchase;
+import jakarta.persistence.*;
 
+@Entity(name = "purchase_item")
 public class PurchaseItem {
+
+    @Id
+    @Column(name = "purchase_item_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
+
+    @Column
     private Long quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id")
     private Purchase purchase;
+
+    @Deprecated
+    public PurchaseItem() {}
 
     public PurchaseItem(Book book, Long quantity) {
         this.book = book;
