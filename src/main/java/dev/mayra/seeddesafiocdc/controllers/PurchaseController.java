@@ -16,6 +16,7 @@ import dev.mayra.seeddesafiocdc.utils.exceptions.InvalidRequestException;
 import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +60,9 @@ public class PurchaseController {
             throw new InvalidRequestException("Total given is different than calculated total");
         }
 
-        return ResponseEntity.ok().body(purchaseRepository.save(created).toResponseDTO());
+        Purchase saved = purchaseRepository.save(created);
+
+        return new ResponseEntity<>(saved.toResponseDTO(), HttpStatus.CREATED);
     }
 
     @GetMapping
