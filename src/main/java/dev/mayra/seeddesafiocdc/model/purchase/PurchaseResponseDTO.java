@@ -22,12 +22,16 @@ public class PurchaseResponseDTO {
 
     private List<PurchaseItemResponseDTO> items;
 
+    private Double subtotal;
+
     private Double total;
+
+    private String couponCode;
 
     public PurchaseResponseDTO(Long id, String name, String lastname, String document, String documentType,
                                String address, String addressSecondLine, String zipCode, String city, StateResponseDTO state,
                                CountryResponseDTO country, String contact, List<PurchaseItemResponseDTO> items,
-                               Double total) {
+                               Double subtotal, Double total, String couponCode) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -41,7 +45,9 @@ public class PurchaseResponseDTO {
         this.country = country;
         this.contact = contact;
         this.items = items;
+        this.subtotal = subtotal;
         this.total = total;
+        this.couponCode = couponCode;
     }
 
     public Long getId() {
@@ -98,5 +104,13 @@ public class PurchaseResponseDTO {
 
     public Double getTotal() {
         return total;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
     }
 }
