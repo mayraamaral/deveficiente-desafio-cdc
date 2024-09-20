@@ -57,6 +57,8 @@ public class PurchaseRequestDTO {
     @Min(value = 1, message = "Total needs to greater than one")
     private Double total;
 
+    private String couponCode;
+
     public String getName() {
         return name;
     }
@@ -107,5 +109,9 @@ public class PurchaseRequestDTO {
 
     public List<PurchaseItemRequestDTO> getItems() {
         return items;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
     }
 }
