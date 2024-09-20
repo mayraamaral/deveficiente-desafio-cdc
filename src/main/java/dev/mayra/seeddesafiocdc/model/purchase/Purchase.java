@@ -1,10 +1,12 @@
 package dev.mayra.seeddesafiocdc.model.purchase;
 
 import dev.mayra.seeddesafiocdc.model.country.Country;
+import dev.mayra.seeddesafiocdc.model.coupon.Coupon;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
+import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -61,7 +63,14 @@ public class Purchase {
     private List<PurchaseItem> items = new ArrayList<>();
 
     @Column
+    private Double subtotal;
+
+    @Column
     private Double total;
+
+    @ManyToOne
+    @JoinColumn(name = "coupon_code", referencedColumnName = "code")
+    private Coupon coupon;
 
     @Deprecated
     public Purchase() {}
@@ -96,6 +105,56 @@ public class Purchase {
         this.country = country;
         this.contact = dto.getContact();
         this.total = dto.getTotal();
+    }
+
+    public ValidationResult applyDiscount(Coupon coupon) {
+        ValidationResult validation = coupon.validate();
+
+        if(validation.isValid()) {
+            applyDiscountPercentageInTotal(coupon.getPercentage());
+        }
+
+        this.coupon = coupon;
+        return validation;
+    }
+
+    private void applyDiscountPercentageInTotal(Integer percentage) {
+        total = subtotal - (subtotal * (percentage/100));
+    }
+
+    public Double calculateSubtotal() {
+        subtotal = items.stream()
+            .mapToDouble(item -> item.getBook().getPrice() * item.getQuantity())
+            .sum();
+
+        return subtotal;
+    }
+
+    public boolean isEqualToCalculatedSubtotal(Double total) {
+        return Objects.equals(total, calculateSubtotal());
+    }
+
+    public PurchaseResponseDTO toResponseDTO() {
+        StateResponseDTO stateResponse = Optional.ofNullable(state)
+            .map(State::toResponseDTO).orElse(null);
+
+        return new PurchaseResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
+            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact, itemsToResponseDTO(),
+            subtotal, total,
+            Optional.ofNullable(coupon)
+                .map(Coupon::getCode)
+                .orElse(null));
+    }
+
+    public void addAllItems(List<PurchaseItem> items) {
+        items.forEach(item -> item.setPurchase(this));
+        this.items.addAll(items);
+    }
+
+    public List<PurchaseItemResponseDTO> itemsToResponseDTO() {
+        return items.stream().map(i ->
+                new PurchaseItemResponseDTO(i.getId(), i.getBook().toMinifiedDTO(), i.getQuantity()))
+            .toList();
     }
 
     public Long getId() {
@@ -148,36 +207,5 @@ public class Purchase {
 
     public Double getTotal() {
         return total;
-    }
-
-    public Double calculateTotal() {
-        return items.stream()
-            .mapToDouble(item -> item.getBook().getPrice() * item.getQuantity())
-            .sum();
-    }
-
-    public boolean isEqualToCalculatedTotal(Double total) {
-        return Objects.equals(total, calculateTotal());
-    }
-
-    public PurchaseResponseDTO toResponseDTO() {
-        StateResponseDTO stateResponse = Optional.ofNullable(state)
-            .map(State::toResponseDTO).orElse(null);
-
-        return new PurchaseResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
-            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact, itemsToResponseDTO(),
-            total);
-
-    }
-
-    public void addAllItems(List<PurchaseItem> items) {
-        items.forEach(item -> item.setPurchase(this));
-        this.items.addAll(items);
-    }
-
-    public List<PurchaseItemResponseDTO> itemsToResponseDTO() {
-        return items.stream().map(i ->
-                new PurchaseItemResponseDTO(i.getId(), i.getBook().toMinifiedDTO(), i.getQuantity()))
-            .toList();
     }
 }
