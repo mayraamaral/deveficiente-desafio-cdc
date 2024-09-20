@@ -3,9 +3,7 @@ package dev.mayra.seeddesafiocdc.controllers;
 import dev.mayra.seeddesafiocdc.model.book.Book;
 import dev.mayra.seeddesafiocdc.model.country.Country;
 import dev.mayra.seeddesafiocdc.model.coupon.Coupon;
-import dev.mayra.seeddesafiocdc.model.purchase.Purchase;
-import dev.mayra.seeddesafiocdc.model.purchase.PurchaseRequestDTO;
-import dev.mayra.seeddesafiocdc.model.purchase.PurchaseResponseDTO;
+import dev.mayra.seeddesafiocdc.model.purchase.*;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
@@ -91,6 +89,14 @@ public class PurchaseController {
             .orElseThrow(() -> new NotFoundException("Purchase not found"));
 
         return ResponseEntity.ok().body(found.toResponseDTO());
+    }
+
+    @GetMapping("/{id}/minified")
+    public ResponseEntity<PurchaseMinifiedDTO> listByIdMinified(@PathVariable Long id) {
+        PurchaseMinifiedProjection found = purchaseRepository.findByIdMinified(id)
+            .orElseThrow(() -> new NotFoundException("Purchase not found"));
+
+        return ResponseEntity.ok().body(new PurchaseMinifiedDTO(found));
     }
 
     private List<PurchaseItem> itemRequestListToItem(PurchaseRequestDTO dto) {

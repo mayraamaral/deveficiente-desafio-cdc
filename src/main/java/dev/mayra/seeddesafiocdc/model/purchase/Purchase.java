@@ -134,6 +134,18 @@ public class Purchase {
         return Objects.equals(total, calculateSubtotal());
     }
 
+    public boolean hasCoupon() {
+        return Optional.ofNullable(coupon).isPresent();
+    }
+
+    public String getCouponOrNull() {
+        if(!hasCoupon()) {
+            return null;
+        }
+
+        return coupon.getCode();
+    }
+
     public PurchaseResponseDTO toResponseDTO() {
         StateResponseDTO stateResponse = Optional.ofNullable(state)
             .map(State::toResponseDTO).orElse(null);
@@ -144,6 +156,10 @@ public class Purchase {
             Optional.ofNullable(coupon)
                 .map(Coupon::getCode)
                 .orElse(null));
+    }
+
+    public PurchaseMinifiedDTO toMinifiedDTO() {
+        return new PurchaseMinifiedDTO(id, subtotal, total, hasCoupon(), getCouponOrNull());
     }
 
     public void addAllItems(List<PurchaseItem> items) {
