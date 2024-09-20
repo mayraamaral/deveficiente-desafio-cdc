@@ -11,7 +11,10 @@ CREATE TABLE purchase (
     state_id BIGINT,
     country_id BIGINT NOT NULL,
     contact VARCHAR(100) NOT NULL,
+    subtotal DOUBLE NOT NULL,
     total DOUBLE NOT NULL,
+    coupon_code VARCHAR(100),
+    CONSTRAINT coupon_purchase_fk FOREIGN KEY (coupon_code) REFERENCES coupon(code),
     CONSTRAINT state_purchase_fk FOREIGN KEY (state_id) REFERENCES state(state_id),
     CONSTRAINT country_purchase_fk FOREIGN KEY (country_id) REFERENCES country(country_id)
 );
