@@ -2,16 +2,15 @@ package dev.mayra.seeddesafiocdc.controllers;
 
 import dev.mayra.seeddesafiocdc.model.book.Book;
 import dev.mayra.seeddesafiocdc.model.country.Country;
+import dev.mayra.seeddesafiocdc.model.coupon.Coupon;
 import dev.mayra.seeddesafiocdc.model.purchase.Purchase;
 import dev.mayra.seeddesafiocdc.model.purchase.PurchaseRequestDTO;
 import dev.mayra.seeddesafiocdc.model.purchase.PurchaseResponseDTO;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
-import dev.mayra.seeddesafiocdc.repositories.BookRepository;
-import dev.mayra.seeddesafiocdc.repositories.CountryRepository;
-import dev.mayra.seeddesafiocdc.repositories.PurchaseRepository;
-import dev.mayra.seeddesafiocdc.repositories.StateRepository;
+import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
+import dev.mayra.seeddesafiocdc.repositories.*;
 import dev.mayra.seeddesafiocdc.utils.exceptions.InvalidRequestException;
 import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,12 +32,14 @@ public class PurchaseController {
     private final CountryRepository countryRepository;
     private final StateRepository stateRepository;
     private final BookRepository bookRepository;
+    private final CouponRepository couponRepository;
 
-    public PurchaseController(PurchaseRepository purchaseRepository, CountryRepository countryRepository, StateRepository stateRepository, BookRepository bookRepository) {
+    public PurchaseController(PurchaseRepository purchaseRepository, CountryRepository countryRepository, StateRepository stateRepository, BookRepository bookRepository, CouponRepository couponRepository) {
         this.purchaseRepository = purchaseRepository;
         this.countryRepository = countryRepository;
         this.stateRepository = stateRepository;
         this.bookRepository = bookRepository;
+        this.couponRepository = couponRepository;
     }
 
     @PostMapping
@@ -56,8 +58,19 @@ public class PurchaseController {
         List<PurchaseItem> itemsEntity = itemRequestListToItem(purchase);
         created.addAllItems(itemsEntity);
 
-        if(!created.isEqualToCalculatedTotal(purchase.getTotal())) {
+        if(!created.isEqualToCalculatedSubtotal(purchase.getTotal())) {
             throw new InvalidRequestException("Total given is different than calculated total");
+        }
+
+        if(Optional.ofNullable(purchase.getCouponCode()).isPresent()) {
+            Coupon coupon = couponRepository.findByCode(purchase.getCouponCode())
+                .orElseThrow(() -> new NotFoundException("Coupon not found"));
+
+            ValidationResult validation = created.applyDiscount(coupon);
+
+            if(!validation.isValid()) {
+                throw new InvalidRequestException(validation.getErrorMessage());
+            }
         }
 
         Purchase saved = purchaseRepository.save(created);
