@@ -85,6 +85,14 @@ public class PurchaseController {
             .toList());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PurchaseResponseDTO> listById(@PathVariable Long id) {
+        Purchase found = purchaseRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Purchase not found"));
+
+        return ResponseEntity.ok().body(found.toResponseDTO());
+    }
+
     private List<PurchaseItem> itemRequestListToItem(PurchaseRequestDTO dto) {
         List<Long> bookIds = extractBookIds(dto);
 
