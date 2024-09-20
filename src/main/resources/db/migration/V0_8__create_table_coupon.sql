@@ -1,0 +1,6 @@
+CREATE TABLE `coupon` (
+    coupon_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(100) UNIQUE NOT NULL,
+    percentage TINYINT UNSIGNED NOT NULL,
+    expiration_date DATE NOT NULL
+);
