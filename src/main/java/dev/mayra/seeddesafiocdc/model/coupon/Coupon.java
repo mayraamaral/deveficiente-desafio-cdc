@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.model.coupon;
 
+import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -8,10 +9,6 @@ import java.time.LocalDate;
 public class Coupon {
 
     @Id
-    @Column(name = "coupon_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column
     private String code;
 
@@ -24,8 +21,7 @@ public class Coupon {
     @Deprecated
     public Coupon() {}
 
-    public Coupon(Long id, String code, Integer percentage, LocalDate expirationDate) {
-        this.id = id;
+    public Coupon(String code, Integer percentage, LocalDate expirationDate) {
         this.code = code;
         this.percentage = percentage;
         this.expirationDate = expirationDate;
@@ -37,8 +33,16 @@ public class Coupon {
         this.expirationDate = dto.getExpirationDate();
     }
 
-    public Long getId() {
-        return id;
+    public boolean isValid() {
+        return expirationDate.isAfter(LocalDate.now());
+    }
+
+    public ValidationResult validate() {
+        if(!isValid()) {
+            return ValidationResult.invalid("Coupon is expired");
+        }
+
+        return ValidationResult.valid();
     }
 
     public String getCode() {
@@ -54,6 +58,6 @@ public class Coupon {
     }
 
     public CouponResponseDTO toResponseDTO() {
-        return new CouponResponseDTO(id, code, percentage, expirationDate);
+        return new CouponResponseDTO(code, percentage, expirationDate);
     }
 }
