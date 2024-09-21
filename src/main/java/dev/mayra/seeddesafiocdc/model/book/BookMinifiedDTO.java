@@ -12,6 +12,11 @@ public class BookMinifiedDTO {
         this.title = title;
     }
 
+    public BookMinifiedDTO(BookMinifiedProjection projection) {
+        this.id = projection.getId();
+        this.title = projection.getTitle();
+    }
+
     public Long getId() {
         return id;
     }

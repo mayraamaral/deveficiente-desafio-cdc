@@ -55,8 +55,8 @@ public class BookController implements BookControllerDoc {
 
     @GetMapping("/minified")
     public ResponseEntity<List<BookMinifiedDTO>> listAllMinified() {
-        return ResponseEntity.ok().body(bookRepository.findAll()
-            .stream().map(Book::toMinifiedDTO)
+        return ResponseEntity.ok().body(bookRepository.findAllMinified()
+            .stream().map(BookMinifiedDTO::new)
             .toList());
     }
 
