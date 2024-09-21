@@ -37,11 +37,7 @@ public class BookController {
         Category category = categoryRepository.findById(book.getCategoryId())
             .orElseThrow(() -> new NotFoundException("Category not found"));
 
-        List<Author> authors = authorRepository.findAllById(book.getAuthorsIds());
-
-        if(authors.isEmpty()) {
-            throw new NotFoundException("No author found");
-        }
+        List<Author> authors = findAuthorsByIds(book.getAuthorsIds());
 
         BookResponseDTO created = bookRepository.save(new Book(book, category, authors))
             .toResponseDTO();
@@ -69,5 +65,22 @@ public class BookController {
             .orElseThrow(() -> new NotFoundException("Book not found"));
 
         return ResponseEntity.ok().body(found.toResponseDTO());
+    }
+
+    private List<Author> findAuthorsByIds(List<Long> authorIds) {
+        List<Author> authors = authorRepository.findAllById(authorIds);
+
+        if(authors.isEmpty()) {
+            throw new NotFoundException("No author found");
+        }
+
+        List<Long> foundAuthorIds = authors.stream().map(Author::getId).toList();
+        List<Long> missingAuthorIds = authorIds.stream().filter(id -> !foundAuthorIds.contains(id)).toList();
+
+        if (!missingAuthorIds.isEmpty()) {
+            throw new NotFoundException("Authors not found with ids: " + missingAuthorIds);
+        }
+
+        return authors;
     }
 }
