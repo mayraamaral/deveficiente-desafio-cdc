@@ -1,27 +1,15 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
-import dev.mayra.seeddesafiocdc.model.book.Book;
-import dev.mayra.seeddesafiocdc.model.country.Country;
-import dev.mayra.seeddesafiocdc.model.coupon.Coupon;
 import dev.mayra.seeddesafiocdc.model.purchase.*;
-import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
-import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
-import dev.mayra.seeddesafiocdc.model.state.State;
-import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
 import dev.mayra.seeddesafiocdc.repositories.*;
 import dev.mayra.seeddesafiocdc.services.PurchaseService;
-import dev.mayra.seeddesafiocdc.utils.exceptions.InvalidRequestException;
 import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/purchase")
