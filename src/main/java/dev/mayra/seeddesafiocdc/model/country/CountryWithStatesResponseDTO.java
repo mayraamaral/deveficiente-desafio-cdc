@@ -12,12 +12,6 @@ public class CountryWithStatesResponseDTO extends CountryResponseDTO {
         this.states = states;
     }
 
-    public CountryWithStatesResponseDTO(CountryWithStatesProjection projection) {
-        this(projection.getId(),
-            projection.getName(),
-            projection.getStatesWithoutCountryResponseDTO());
-    }
-
     public List<StateResponseDTO> getStates() {
         return states;
     }

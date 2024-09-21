@@ -42,6 +42,6 @@ public class CountryController implements CountryControllerDoc {
     public ResponseEntity<List<CountryWithStatesResponseDTO>> listAllWithStates() {
         return ResponseEntity.ok().body(
             countryRepository.findAllWithStates()
-                .stream().map(CountryWithStatesResponseDTO::new).toList());
+                .stream().map(Country::toResponseDTOWithStates).toList());
     }
 }

@@ -2,6 +2,7 @@ package dev.mayra.seeddesafiocdc.model.country;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.mayra.seeddesafiocdc.model.state.State;
+import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -46,5 +47,10 @@ public class Country {
 
     public CountryResponseDTO toResponseDTO() {
         return new CountryResponseDTO(id, name);
+    }
+
+    public CountryWithStatesResponseDTO toResponseDTOWithStates() {
+        return new CountryWithStatesResponseDTO(id, name,
+            states.stream().map(State::toResponseDTO).toList());
     }
 }
