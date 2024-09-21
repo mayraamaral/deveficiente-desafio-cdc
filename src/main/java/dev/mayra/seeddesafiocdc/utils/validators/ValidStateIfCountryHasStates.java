@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = { ValidStatesIfCountryHasStatesValidator.class })
 public @interface ValidStateIfCountryHasStates {
-    String message() default "State must be selected if the country has states";
+    String message() default "State id must be given if the country has states";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -11,9 +11,15 @@ import java.util.Optional;
 public class ValidStatesIfCountryHasStatesValidator implements ConstraintValidator<ValidStateIfCountryHasStates, PurchaseRequestDTO> {
 
     private final CountryRepository countryRepository;
+    private String message;
 
     public ValidStatesIfCountryHasStatesValidator(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
+    }
+
+    @Override
+    public void initialize(ValidStateIfCountryHasStates constraintAnnotation) {
+        this.message = constraintAnnotation.message();
     }
 
     @Override
@@ -32,7 +38,7 @@ public class ValidStatesIfCountryHasStatesValidator implements ConstraintValidat
 
         if (country.hasStates() && purchaseRequestDTO.getStateId() == null) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("State must be selected if the country has states")
+            context.buildConstraintViolationWithTemplate(message)
                 .addPropertyNode("stateId")
                 .addConstraintViolation();
             return false;
