@@ -16,8 +16,8 @@ public class PurchaseResponseDTO {
     private String addressSecondLine;
     private String zipCode;
     private String city;
-    private StateResponseDTO state;
-    private CountryResponseDTO country;
+    private String countryName;
+    private String stateName;
     private String contact;
 
     private List<PurchaseItemResponseDTO> items;
@@ -29,8 +29,8 @@ public class PurchaseResponseDTO {
     private String couponCode;
 
     public PurchaseResponseDTO(Long id, String name, String lastname, String document, String documentType,
-                               String address, String addressSecondLine, String zipCode, String city, StateResponseDTO state,
-                               CountryResponseDTO country, String contact, List<PurchaseItemResponseDTO> items,
+                               String address, String addressSecondLine, String zipCode, String city, String stateName,
+                               String countryName, String contact, List<PurchaseItemResponseDTO> items,
                                Double subtotal, Double total, String couponCode) {
         this.id = id;
         this.name = name;
@@ -41,8 +41,8 @@ public class PurchaseResponseDTO {
         this.addressSecondLine = addressSecondLine;
         this.zipCode = zipCode;
         this.city = city;
-        this.state = state;
-        this.country = country;
+        this.stateName = stateName;
+        this.countryName = countryName;
         this.contact = contact;
         this.items = items;
         this.subtotal = subtotal;
@@ -86,12 +86,12 @@ public class PurchaseResponseDTO {
         return city;
     }
 
-    public StateResponseDTO getState() {
-        return state;
+    public String getStateName() {
+        return stateName;
     }
 
-    public CountryResponseDTO getCountry() {
-        return country;
+    public String getCountryName() {
+        return countryName;
     }
 
     public String getContact() {

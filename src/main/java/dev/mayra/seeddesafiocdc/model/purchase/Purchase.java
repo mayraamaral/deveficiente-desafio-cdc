@@ -150,19 +150,15 @@ public class Purchase {
     }
 
     public PurchaseResponseDTO toResponseDTO() {
-        StateResponseDTO stateResponse = Optional.ofNullable(state)
-            .map(State::toResponseDTO).orElse(null);
+        String stateNameResponse = Optional.ofNullable(state)
+            .map(State::getName).orElse(null);
 
         return new PurchaseResponseDTO(id, name, lastname, document, documentType.getDescription(), address,
-            addressSecondLine, zipCode, city, stateResponse, country.toResponseDTO(), contact, itemsToResponseDTO(),
+            addressSecondLine, zipCode, city, stateNameResponse, country.getName(), contact, itemsToResponseDTO(),
             subtotal, total,
             Optional.ofNullable(coupon)
                 .map(Coupon::getCode)
                 .orElse(null));
-    }
-
-    public PurchaseMinifiedDTO toMinifiedDTO() {
-        return new PurchaseMinifiedDTO(id, subtotal, total, hasCoupon(), getCouponOrNull());
     }
 
     public void addAllItems(List<PurchaseItem> items) {
