@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.PurchaseControllerDoc;
 import dev.mayra.seeddesafiocdc.model.purchase.*;
 import dev.mayra.seeddesafiocdc.repositories.*;
 import dev.mayra.seeddesafiocdc.services.PurchaseService;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/purchase")
 @Tag(name = "Purchase", description = "Operations related to the Purchase entity")
-public class PurchaseController {
+public class PurchaseController implements PurchaseControllerDoc {
     private final PurchaseService purchaseService;
     private final PurchaseRepository purchaseRepository;
 

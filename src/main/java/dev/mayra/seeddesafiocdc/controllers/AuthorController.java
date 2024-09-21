@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.AuthorControllerDoc;
 import dev.mayra.seeddesafiocdc.model.author.Author;
 import dev.mayra.seeddesafiocdc.model.author.AuthorRequestDTO;
 import dev.mayra.seeddesafiocdc.model.author.AuthorResponseDTO;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/author")
 @Tag(name = "Author", description = "Operations related to the Author entity")
-public class AuthorController {
+public class AuthorController implements AuthorControllerDoc {
     private final AuthorRepository authorRepository;
 
     public AuthorController(AuthorRepository authorRepository) {

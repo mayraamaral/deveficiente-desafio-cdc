@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.StateControllerDoc;
 import dev.mayra.seeddesafiocdc.model.country.Country;
 import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateRequestDTO;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/state")
 @Tag(name = "State", description = "Operations related to the State entity")
-public class StateController {
+public class StateController implements StateControllerDoc {
     private final StateRepository stateRepository;
     private final CountryRepository countryRepository;
 

@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.BookControllerDoc;
 import dev.mayra.seeddesafiocdc.model.author.Author;
 import dev.mayra.seeddesafiocdc.model.book.Book;
 import dev.mayra.seeddesafiocdc.model.book.BookMinifiedDTO;
@@ -20,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/book")
 @Tag(name = "Book", description = "Operations related to the Book entity")
-public class BookController {
+public class BookController implements BookControllerDoc {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
     private final AuthorRepository authorRepository;

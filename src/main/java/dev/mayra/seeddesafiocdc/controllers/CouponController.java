@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.CouponControllerDoc;
 import dev.mayra.seeddesafiocdc.model.coupon.Coupon;
 import dev.mayra.seeddesafiocdc.model.coupon.CouponRequestDTO;
 import dev.mayra.seeddesafiocdc.model.coupon.CouponResponseDTO;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/coupon")
 @Tag(name = "Coupon", description = "Operations related to the Coupon entity")
-public class CouponController {
+public class CouponController implements CouponControllerDoc {
     private final CouponRepository couponRepository;
 
     public CouponController(CouponRepository couponRepository) {

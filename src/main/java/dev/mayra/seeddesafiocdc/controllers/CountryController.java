@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.CountryControllerDoc;
 import dev.mayra.seeddesafiocdc.model.country.Country;
 import dev.mayra.seeddesafiocdc.model.country.CountryRequestDTO;
 import dev.mayra.seeddesafiocdc.model.country.CountryResponseDTO;
@@ -15,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/country")
 @Tag(name = "Country", description = "Operations related to the Country entity")
-public class CountryController {
+public class CountryController implements CountryControllerDoc {
     private final CountryRepository countryRepository;
 
     public CountryController(CountryRepository countryRepository) {

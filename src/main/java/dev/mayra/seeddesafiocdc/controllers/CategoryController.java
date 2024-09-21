@@ -1,5 +1,6 @@
 package dev.mayra.seeddesafiocdc.controllers;
 
+import dev.mayra.seeddesafiocdc.controllers.docs.CategoryControllerDoc;
 import dev.mayra.seeddesafiocdc.model.category.Category;
 import dev.mayra.seeddesafiocdc.model.category.CategoryRequestDTO;
 import dev.mayra.seeddesafiocdc.model.category.CategoryResponseDTO;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Tag(name = "Category", description = "Operations related to the Category entity")
-public class CategoryController {
+public class CategoryController implements CategoryControllerDoc {
     private final CategoryRepository categoryRepository;
 
     public CategoryController(CategoryRepository categoryRepository) {
