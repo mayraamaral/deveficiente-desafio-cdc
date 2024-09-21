@@ -20,23 +20,26 @@ PS.: if you face permission issues, just run the command bellow, and then run th
 ```shell
 chmod +x mvnw
 ```
-Then, you can just go to http://localhost:8080 and access the Swagger Docs. 
-## Explaining the project  
-Challenge proposed by Alberto Souza in the Dev Eficiente course, which consists of creating a system (in this case an API)
-that simulates the functionality of the Casa do Código website.
+Once the application is running, you can access the Swagger documentation by navigating to http://localhost:8080. 
+## Project Overview
+This project is a challenge proposed by Alberto Souza as part of the Dev Eficiente course. The objective is to create a 
+system (specifically, an API) that simulates the functionality of the Casa do Código website, which is an online bookstore.  
+The system allows for the management of entities such as authors, books, and purchases, following a structured backend architecture.
 ## Stack  
  - Language: Java v21;
  - Framework: Spring & Spring Boot;
  - Docs: Swagger/OpenAPI;
- - RDBMS: MySQL;
+ - Database: MySQL (RDBMS).
 ## Entities  
- - Author;
- - Book;
- - Category;
- - Country;
- - State;
- - Coupon;
- - Purchase.
+ - **Author**: Represents the book authors;
+ - **Book**: Represents the books available in the store;
+ - **Category**: Represents different book categories;
+ - **Country**: Represents the countries for user addresses;
+ - **State**: Represents states within a country;
+ - **Coupon**: Discount coupons applicable to purchases;
+ - **Purchase**: Represents customer purchases, including payment details;
+ - **PurchaseItem**: Represents individual items within a purchase, linking a specific book to the purchase and 
+capturing its quantity.
 ## DB Diagram  
 <p align="center">
   <img src="docs/diagram.png" alt="GIF of the Swagger Docs" />
