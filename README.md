@@ -2,6 +2,7 @@
 <p align="center">
   <img src="docs/project.gif" alt="GIF of the Swagger Docs" />
 </p> 
+  
 ## Explaining the project  
 Challenge proposed by Alberto Souza in the Dev Efficient course, which consists of creating a system that simulates 
 the functionality of the Casa do Código website.
