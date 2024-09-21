@@ -100,11 +100,14 @@ public class Purchase {
         this.address = dto.getAddress();
         this.addressSecondLine = dto.getAddressSecondLine();
         this.zipCode = dto.getZipCode();
-        this.city = dto.getZipCode();
-        this.state = state;
+        this.city = dto.getCity();
         this.country = country;
         this.contact = dto.getContact();
         this.total = dto.getTotal();
+
+        if(Optional.ofNullable(state).isPresent()) {
+            this.state = state;
+        }
     }
 
     public ValidationResult applyDiscount(Coupon coupon) {
@@ -119,7 +122,7 @@ public class Purchase {
     }
 
     private void applyDiscountPercentageInTotal(Integer percentage) {
-        total = subtotal - (subtotal * (percentage/100));
+        total = subtotal - (subtotal * ((double) percentage/100));
     }
 
     public Double calculateSubtotal() {
