@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 
 public class CategoryRequestDTO {
 
+    @Schema(description = "Fill the category name", required = true, example = "Romance")
     @NotBlank(message = "Name can't be null or empty")
     @UniqueValue(fieldName = "name", domainClass = Category.class, message = "Name already exists")
-    @Schema(description = "Fill the category name", required = true, example = "Romance")
     private String name;
 
     @Deprecated
