@@ -1,9 +1,10 @@
 package dev.mayra.seeddesafiocdc.model.coupon;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import dev.mayra.seeddesafiocdc.utils.validators.FutureString;
 import dev.mayra.seeddesafiocdc.utils.validators.UniqueValue;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
-
-import java.time.LocalDate;
 
 public class CouponRequestDTO {
 
@@ -16,10 +17,12 @@ public class CouponRequestDTO {
     @Positive(message = "Percentage needs to be a positive number")
     private Integer percentage;
 
-    @Future(message = "Expiration date needs to be in the future")
-    private LocalDate expirationDate;
+    @FutureString(message = "Expiration date needs to be in the future")
+    @Schema(description = "Fill the publish date", required = true, example = "31-12-2024", format = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private String expirationDate;
 
-    public CouponRequestDTO(String code, Integer percentage, LocalDate expirationDate) {
+    public CouponRequestDTO(String code, Integer percentage, String expirationDate) {
         this.code = code;
         this.percentage = percentage;
         this.expirationDate = expirationDate;
@@ -33,7 +36,7 @@ public class CouponRequestDTO {
         return percentage;
     }
 
-    public LocalDate getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 }

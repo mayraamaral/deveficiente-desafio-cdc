@@ -1,6 +1,7 @@
 package dev.mayra.seeddesafiocdc.model.coupon;
 
 import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
+import dev.mayra.seeddesafiocdc.utils.date.DateUtils;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -30,7 +31,7 @@ public class Coupon {
     public Coupon(CouponRequestDTO dto) {
         this.code = dto.getCode();
         this.percentage = dto.getPercentage();
-        this.expirationDate = dto.getExpirationDate();
+        this.expirationDate = DateUtils.fromStringFormattedToLocalDate(dto.getExpirationDate());
     }
 
     public boolean isValid() {
