@@ -2,6 +2,7 @@ package dev.mayra.seeddesafiocdc.model.book;
 
 import dev.mayra.seeddesafiocdc.model.author.AuthorMinifiedDTO;
 import dev.mayra.seeddesafiocdc.model.category.CategoryResponseDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +15,10 @@ public class BookResponseDTO {
     private Double price;
     private Short pagesNumber;
     private String isbn;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate publishDate;
+
     private CategoryResponseDTO category;
     private List<AuthorMinifiedDTO> authors;
 

@@ -3,6 +3,7 @@ package dev.mayra.seeddesafiocdc.model.book;
 import dev.mayra.seeddesafiocdc.model.author.Author;
 import dev.mayra.seeddesafiocdc.model.author.AuthorMinifiedDTO;
 import dev.mayra.seeddesafiocdc.model.category.Category;
+import dev.mayra.seeddesafiocdc.utils.date.DateUtils;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -69,7 +70,7 @@ public class Book {
         this.price = dto.getPrice();
         this.pagesNumber = dto.getPagesNumber();
         this.isbn = dto.getIsbn();
-        this.publishDate = dto.getPublishDate();
+        this.publishDate = DateUtils.fromStringFormattedToLocalDate(dto.getPublishDate());
         this.category = category;
         this.authors = authors;
     }

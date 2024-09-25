@@ -1,12 +1,13 @@
 package dev.mayra.seeddesafiocdc.model.book;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.mayra.seeddesafiocdc.utils.validators.UniqueValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class BookRequestDTO {
@@ -41,8 +42,9 @@ public class BookRequestDTO {
     private String isbn;
 
     @NotNull(message = "Publish Date can't be null")
-    @Schema(description = "Fill the publish date", required = true, example = "1938-01-01")
-    private LocalDate publishDate;
+    @Schema(description = "Fill the publish date", required = true, example = "01-01-1938", format = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private String publishDate;
 
     @NotNull(message = "Category Id can't be null")
     @Schema(description = "Fill the book category id", required = true, example = "1")
@@ -52,7 +54,7 @@ public class BookRequestDTO {
     @Schema(description = "Fill the book authors id list", required = true, example = "[1, 2]")
     private List<Long> authorsIds;
 
-    public BookRequestDTO(String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, LocalDate publishDate, Long categoryId, List<Long> authorsIds) {
+    public BookRequestDTO(String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, String publishDate, Long categoryId, List<Long> authorsIds) {
         this.title = title;
         this.bookAbstract = bookAbstract;
         this.summary = summary;
@@ -88,7 +90,7 @@ public class BookRequestDTO {
         return isbn;
     }
 
-    public LocalDate getPublishDate() {
+    public String getPublishDate() {
         return publishDate;
     }
 
