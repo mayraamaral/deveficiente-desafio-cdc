@@ -33,10 +33,10 @@ This project is a challenge proposed by Alberto Souza as part of the Dev Eficien
 system (specifically, an API) that simulates the functionality of the Casa do Código website, which is an online bookstore.  
 The system allows for the management of entities such as authors, books, and purchases, following a structured backend architecture.
 ## Stack  
- - Language: Java v21;
- - Framework: Spring & Spring Boot;
- - Docs: Swagger/OpenAPI;
- - Database: MySQL (RDBMS).
+ - **Language**: Java v21;
+ - **Framework**: Spring & Spring Boot;
+ - **Docs**: Swagger/OpenAPI;
+ - **Database**: MySQL (RDBMS).
 ## Entities  
  - **Author**: Represents the book authors;
  - **Book**: Represents the books available in the store;
