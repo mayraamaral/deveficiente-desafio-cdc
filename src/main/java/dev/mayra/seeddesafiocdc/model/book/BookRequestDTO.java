@@ -42,7 +42,7 @@ public class BookRequestDTO {
     private String isbn;
 
     @Schema(description = "Fill the publish date", required = true, example = "01-01-1938", format = "dd-MM-yyyy")
-    @NotNull(message = "Publish Date can't be null")
+    @NotBlank(message = "Publish date can't be null or empty")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private String publishDate;
 

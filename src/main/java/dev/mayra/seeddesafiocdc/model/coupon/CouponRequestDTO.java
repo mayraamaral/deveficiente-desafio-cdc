@@ -19,7 +19,8 @@ public class CouponRequestDTO {
     @Positive(message = "Percentage needs to be a positive number")
     private Integer percentage;
 
-    @Schema(description = "Fill the publish date", required = true, example = "31-12-2024", format = "dd-MM-yyyy")
+    @Schema(description = "Fill the espiration date", required = true, example = "31-12-2024", format = "dd-MM-yyyy")
+    @NotBlank(message = "Expiration date can't be null or empty")
     @FutureString(message = "Expiration date needs to be in the future")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private String expirationDate;
