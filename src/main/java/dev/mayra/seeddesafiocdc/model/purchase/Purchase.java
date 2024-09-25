@@ -8,6 +8,7 @@ import dev.mayra.seeddesafiocdc.model.state.State;
 import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
 import jakarta.persistence.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class Purchase {
     public Purchase(PurchaseRequestDTO dto, Country country, State state) {
         this.name = dto.getName();
         this.lastname = dto.getLastname();
-        this.document = dto.getDocument();
+        this.document = StringUtils.getDigits(dto.getDocument());
         this.documentType = DocumentType.valueOf(dto.getDocumentType());
         this.address = dto.getAddress();
         this.addressSecondLine = dto.getAddressSecondLine();
