@@ -1,6 +1,7 @@
 package dev.mayra.seeddesafiocdc.model.purchase;
 
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemRequestDTO;
+import dev.mayra.seeddesafiocdc.utils.validators.DocumentValidador;
 import dev.mayra.seeddesafiocdc.utils.validators.NotEmptyList;
 import dev.mayra.seeddesafiocdc.utils.validators.ValidStateIfCountryHasStates;
 
@@ -25,10 +26,7 @@ public class PurchaseRequestDTO {
 
     @Schema(description = "Fill the customer document", required = true, example = "123.123.123-12")
     @NotBlank(message = "Document can't be null or empty")
-    @Pattern(
-        regexp = "(^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$)|(^\\d{11}$)|(^\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}$)|(^\\d{14}$)",
-        message = "Invalid document type. It should be a valid CPF or CNPJ"
-    )
+    @DocumentValidador(message = "Invalid document. It should be a valid CPF or CNPJ")
     private String document;
 
     @Schema(description = "Fill the customer document type", required = true, example = "CPF or CNPJ")
