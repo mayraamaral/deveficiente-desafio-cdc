@@ -43,6 +43,15 @@ public class PurchaseService {
 
         Optional<State> possibleState = getStateIfCountryHasStates(country, dto);
 
+        possibleState.ifPresent(state -> {
+            boolean stateBelongsToCountry = stateRepository
+                .existsByIdAndCountry_Id(dto.getStateId(), dto.getCountryId());
+
+            if(!stateBelongsToCountry) {
+                throw new InvalidRequestException("State does not belong to country");
+            }
+        });
+
         Purchase created = new Purchase(dto, country, possibleState);
 
         addItemsToPurchase(created, dto);

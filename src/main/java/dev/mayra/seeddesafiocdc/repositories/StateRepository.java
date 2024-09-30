@@ -8,4 +8,5 @@ import java.util.List;
 public interface StateRepository extends JpaRepository<State, Long> {
 
     List<State> findAllByCountry_Id(Long countryId);
+    boolean existsByIdAndCountry_Id(Long stateId, Long countryId);
 }
