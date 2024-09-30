@@ -43,7 +43,7 @@ public class PurchaseService {
 
         Optional<State> possibleState = getStateIfCountryHasStates(country, dto);
 
-        Purchase created = new Purchase(dto, country, possibleState.orElse(null));
+        Purchase created = new Purchase(dto, country, possibleState);
 
         addItemsToPurchase(created, dto);
 

@@ -93,7 +93,7 @@ public class Purchase {
         this.contact = contact;
     }
 
-    public Purchase(PurchaseRequestDTO dto, Country country, State state) {
+    public Purchase(PurchaseRequestDTO dto, Country country, Optional<State> possibleState) {
         this.name = dto.getName();
         this.lastname = dto.getLastname();
         this.document = StringUtils.getDigits(dto.getDocument());
@@ -105,10 +105,7 @@ public class Purchase {
         this.country = country;
         this.contact = dto.getContact();
         this.total = dto.getTotal();
-
-        if(Optional.ofNullable(state).isPresent()) {
-            this.state = state;
-        }
+        possibleState.ifPresent(state -> this.state = state);
     }
 
     public ValidationResult applyDiscount(Coupon coupon) {
