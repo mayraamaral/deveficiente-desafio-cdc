@@ -73,7 +73,7 @@ class CategoryControllerTest {
     }
 
     @Test
-    void findAll() throws Exception {
+    void findAll__should_list_all_categories_with_success() throws Exception {
         List<Category> categories = List.of(entity);
 
         when(categoryRepository.findAll()).thenReturn(categories);
