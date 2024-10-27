@@ -16,11 +16,11 @@ public class CouponRequestDTO {
     @Schema(description = "Fill the percentage", required = true, example = "50")
     @Min(value = 1, message = "Percentage needs to be at least 1")
     @Max(value = 100, message = "Percentage needs to be lower or equal to 100")
-    @Positive(message = "Percentage needs to be a positive number")
+    @NotNull(message = "Percentage can't be null")
     private Integer percentage;
 
     @Schema(description = "Fill the espiration date", required = true, example = "31-12-2024", format = "dd-MM-yyyy")
-    @NotBlank(message = "Expiration date can't be null or empty")
+    @NotNull(message = "Expiration date can't be null")
     @FutureString(message = "Expiration date needs to be in the future")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private String expirationDate;
