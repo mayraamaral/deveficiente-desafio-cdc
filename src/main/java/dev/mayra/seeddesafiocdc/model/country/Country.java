@@ -2,7 +2,6 @@ package dev.mayra.seeddesafiocdc.model.country;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.mayra.seeddesafiocdc.model.state.State;
-import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -43,6 +42,10 @@ public class Country {
 
     public String getName() {
         return name;
+    }
+
+    public void setStates(List<State> states) {
+        this.states = states;
     }
 
     public CountryResponseDTO toResponseDTO() {
