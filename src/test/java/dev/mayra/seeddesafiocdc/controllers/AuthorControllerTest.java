@@ -8,6 +8,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -66,49 +70,16 @@ class AuthorControllerTest {
             .andExpect(jsonPath("$.name").value(dto.getName()));
     }
 
-    @Test
-    void create__should_throw_exception_when_author_dont_have_a_name() throws Exception {
-        AuthorRequestDTO invalidDto = new AuthorRequestDTO(
-            "",
-            "michael.scott@dundermiflin.com",
-            "Author of Somehow I Manage");
+    @ParameterizedTest
+    @MethodSource("invalidAuthorRequestDTOProvider")
+    void create__should_throw_exception_for_invalid_fields(AuthorRequestDTO invalidDto, String jsonPath, String errorMessage) throws Exception {
 
         mockMvc.perform(post("/author")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(invalidDto)))
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors.name")
-                .value("Name can't be null or empty"));
-    }
-
-    @Test
-    void create__should_throw_exception_when_author_dont_have_a_email() throws Exception {
-        AuthorRequestDTO invalidDto = new AuthorRequestDTO(
-            "Michael Scott",
-            "",
-            "Author of Somehow I Manage");
-
-        mockMvc.perform(post("/author")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidDto)))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors.email")
-                .value("E-mail can't be null or empty"));
-    }
-
-    @Test
-    void create__should_throw_exception_when_author_dont_have_a_description() throws Exception {
-        AuthorRequestDTO invalidDto = new AuthorRequestDTO(
-            "Michael Scott",
-            "michael.scott@dundermiflin.com",
-            "");
-
-        mockMvc.perform(post("/author")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidDto)))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.errors.description")
-                .value("Description can't be null or empty"));
+            .andExpect(jsonPath(jsonPath)
+                .value(errorMessage));
     }
 
     @Test
@@ -121,5 +92,37 @@ class AuthorControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].name").value(dto.getName()));
+    }
+
+    private static Stream<Arguments> invalidAuthorRequestDTOProvider() {
+        return Stream.of(
+            Arguments.of(
+                new AuthorRequestDTO(
+                    "",
+                    "michael.scott@dundermiflin.com",
+                    "Author of Somehow I Manage"
+                ),
+                "$.errors.name",
+                "Name can't be null or empty"
+            ),
+            Arguments.of(
+                new AuthorRequestDTO(
+                    "Michael Scott",
+                    "",
+                    "Author of Somehow I Manage"
+                ),
+                "$.errors.email",
+                "E-mail can't be null or empty"
+            ),
+            Arguments.of(
+                new AuthorRequestDTO(
+                    "Michael Scott",
+                    "michael.scott@dundermiflin.com",
+                    ""
+                ),
+                "$.errors.description",
+                "Description can't be null or empty"
+            )
+        );
     }
 }
