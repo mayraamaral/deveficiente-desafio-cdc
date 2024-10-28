@@ -5,7 +5,6 @@ import dev.mayra.seeddesafiocdc.model.coupon.Coupon;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItem;
 import dev.mayra.seeddesafiocdc.model.purchaseItem.PurchaseItemResponseDTO;
 import dev.mayra.seeddesafiocdc.model.state.State;
-import dev.mayra.seeddesafiocdc.model.state.StateResponseDTO;
 import dev.mayra.seeddesafiocdc.model.validation.ValidationResult;
 import jakarta.persistence.*;
 import org.apache.commons.lang3.StringUtils;
