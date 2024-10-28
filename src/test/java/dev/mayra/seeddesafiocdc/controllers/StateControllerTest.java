@@ -92,7 +92,7 @@ class StateControllerTest {
 
         when(stateRepository.findAllByCountry_Id(country.getId())).thenReturn(states);
 
-        mockMvc.perform(get("/state/".concat(idString), country.getId())
+        mockMvc.perform(get("/state/{countryId}", country.getId())
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].name").value(dto.getName()))
@@ -102,11 +102,10 @@ class StateControllerTest {
     @Test
     void listAllByCountryId__should_return_empty_list_when_country_not_found() throws Exception {
         Long randomId = new Random().nextLong();
-        String randomIdString = String.valueOf(new Random().nextLong());
 
         when(stateRepository.findAllByCountry_Id(randomId)).thenReturn(List.of());
 
-        mockMvc.perform(get("/state/".concat(randomIdString), 3244)
+        mockMvc.perform(get("/state/{countryId}", randomId)
                 .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isArray())
