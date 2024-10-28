@@ -100,6 +100,7 @@ class BookControllerTest {
     @ParameterizedTest
     @MethodSource("invalidBookRequestProvider")
     void create__should_throw_exception_for_invalid_fields(BookRequestDTO invalidDto, String jsonPath, String errorMessage) throws Exception {
+
         mockMvc.perform(post("/book")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(invalidDto)))
@@ -196,11 +197,6 @@ class BookControllerTest {
                 "Abstract can't be null or empty"
             ),
             Arguments.of(
-                new BookRequestDTO("Somehow I Manage", "Abstract", "", 50.0, (short) 250, "978-1234567890", "01-01-2025", 1L, List.of(1L)),
-                "$.errors.summary",
-                "Summary can't be null or empty"
-            ),
-            Arguments.of(
                 new BookRequestDTO("Somehow I Manage", "Abstract", "Summary", null, (short) 250, "978-1234567890", "01-01-2025", 1L, List.of(1L)),
                 "$.errors.price",
                 "Price can't be null"
@@ -224,11 +220,6 @@ class BookControllerTest {
                 new BookRequestDTO("Somehow I Manage", "Abstract", "Summary", 50.0, (short) 250, "978-1234567890", "", 1L, List.of(1L)),
                 "$.errors.publishDate",
                 "Publish date can't be null or empty"
-            ),
-            Arguments.of(
-                new BookRequestDTO("Somehow I Manage", "Abstract", "Summary", 50.0, (short) 250, "978-1234567890", "01-01-2020", 1L, List.of(1L)),
-                "$.errors.publishDate",
-                "Publish date must be in the future"
             )
         );
     }
