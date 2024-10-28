@@ -57,7 +57,7 @@ class BookControllerTest {
 
     @BeforeEach
     void setUp() {
-        category = new Category(1L, "Business"); // ID definido pelo construtor de teste
+        category = new Category(1L, "Business");
         author = new Author(1L, "Michael Scott", "michael.scott@dundermifflin.com", "Regional Manager at Dunder Mifflin");
 
         dto = new BookRequestDTO(
