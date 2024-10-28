@@ -51,6 +51,19 @@ public class Book {
     @Deprecated
     public Book() {}
 
+    public Book(Long id, String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, LocalDate publishDate, Category category, List<Author> authors) {
+        this.id = id;
+        this.title = title;
+        this.bookAbstract = bookAbstract;
+        this.summary = summary;
+        this.price = price;
+        this.pagesNumber = pagesNumber;
+        this.isbn = isbn;
+        this.publishDate = publishDate;
+        this.category = category;
+        this.authors = authors;
+    }
+
     public Book(String title, String bookAbstract, String summary, Double price, Short pagesNumber, String isbn, LocalDate publishDate, Category category, List<Author> authors) {
         this.title = title;
         this.bookAbstract = bookAbstract;

@@ -1,6 +1,7 @@
 package dev.mayra.seeddesafiocdc.utils.handlers;
 
 import dev.mayra.seeddesafiocdc.utils.errors.ErrorResponseDTO;
+import dev.mayra.seeddesafiocdc.utils.exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
         Map<String, String> errors = new HashMap<>();
-        errors.put("name", ex.getMessage()); // Adiciona a mensagem de erro ao campo "name"
+        errors.put("name", ex.getMessage());
 
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
             HttpStatus.BAD_REQUEST.value(),
@@ -48,5 +49,20 @@ public class GlobalExceptionHandler {
             errors);
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNotFoundException(NotFoundException ex, HttpServletRequest request) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            HttpStatus.NOT_FOUND.value(),
+            HttpStatus.NOT_FOUND.getReasonPhrase(),
+            ex.getMessage(),
+            request.getRequestURI(),
+            errors);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

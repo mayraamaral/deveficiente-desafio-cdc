@@ -16,6 +16,11 @@ public class Category {
     @Deprecated
     public Category() {}
 
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Category(String name) {
         this.name = name;
     }

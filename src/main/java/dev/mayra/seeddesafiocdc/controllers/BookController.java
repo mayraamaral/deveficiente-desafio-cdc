@@ -26,7 +26,7 @@ public class BookController implements BookControllerDoc {
     private final CategoryRepository categoryRepository;
     private final AuthorRepository authorRepository;
 
-    private BookController(BookRepository bookRepository, CategoryRepository categoryRepository,
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository,
                            AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
