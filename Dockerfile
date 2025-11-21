@@ -1,7 +1,7 @@
 # Multi-stage build for optimized Spring Boot application
 
 # Build argument for port configuration (can be set in Coolify)
-ARG PORT=3002
+ARG PORT=8080
 
 # Stage 1: Build the application
 FROM maven:3.9-eclipse-temurin-21-alpine AS build
@@ -28,7 +28,7 @@ RUN ./mvnw clean package -DskipTests -B
 FROM eclipse-temurin:21-jre-alpine
 
 # Re-declare ARG after FROM to make it available in this stage
-ARG PORT=3002
+ARG PORT=8080
 
 WORKDIR /app
 
