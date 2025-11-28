@@ -10,8 +10,10 @@
 <p align="center">
   <img src="docs/project.gif" alt="GIF of the Swagger Docs" />
 </p> 
-  
-## Running
+
+## Deploy
+🔗 [Link](https://cdc-java-api.mayra.cloud)
+## Running Locally
 ### Linux
 Open the terminal in the repository root folder, and then execute the following command:
 ```shell
